@@ -1,8 +1,49 @@
-import React from "react";
-import Image from "../assets/login2.svg";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Image from "../assets/login1.svg";
 import { ArrowLeft } from "lucide-react";
+const LoginAdmin = () => {
+  const navigate = useNavigate();
+  const { state, dispatch } = useAuth();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-const LoginEmployee = () => {
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/api/v1/account/login", formData)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("account", JSON.stringify(res.data.account));
+        dispatch({
+          type: "LOGIN",
+          token: res.data.token,
+          account: res.data.account,
+        });
+        console.log(state);
+        if (res.data.account.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/employee");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="flex h-screen">
       <a href="/" className="absolute top-5 left-5">
@@ -15,7 +56,7 @@ const LoginEmployee = () => {
         {/* You can adjust the background image URL and styles here */}
       </div>
       <div className="w-1/2 flex justify-center items-center">
-        <div className="p-2 bg-white w-2/3">
+        <form className="p-2 bg-white w-2/3" onSubmit={handleSubmit}>
           <h2 className="text-2xl font-semibold mb-4">
             Login as <span className="font-bold">Admin</span>
           </h2>
@@ -31,6 +72,8 @@ const LoginEmployee = () => {
               id="email"
               className="w-full border rounded py-2 px-3"
               placeholder="Enter your Email"
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           <div className="mb-4">
@@ -45,8 +88,11 @@ const LoginEmployee = () => {
               id="password"
               className="w-full border rounded py-2 px-3"
               placeholder="Enter your Password"
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
+
           <button
             type="submit"
             className="w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
@@ -55,13 +101,13 @@ const LoginEmployee = () => {
           </button>
           <p className="mt-2">
             Don't have an account?{" "}
-            <a href="/register-employee" className="font-semibold">
+            <a href="/register" className="font-semibold">
               Register
             </a>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );
 };
-export default LoginEmployee;
+export default LoginAdmin;

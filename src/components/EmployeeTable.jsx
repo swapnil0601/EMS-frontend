@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EmployeeTableRow from "./EmployeeTableRow";
-
+import axios from "axios";
 const EmployeeTable = () => {
+  const [employees, setEmployees] = useState([]);
+
+  const getEmployees = async () => {
+    const response = await axios.get(
+      "http://localhost:8080/api/v1/employee/all"
+    );
+    setEmployees(response.data.data);
+  };
+
+  useEffect(() => {
+    getEmployees();
+  }, []);
+
   return (
     <table className="min-w-full bg-white border rounded-lg">
       {/* Table header */}
@@ -10,17 +23,14 @@ const EmployeeTable = () => {
           <th className="py-2 px-4 font-semibold border-b">ID</th>
           <th className="py-2 px-4 font-semibold border-b">Name</th>
           <th className="py-2 px-4 font-semibold border-b">Email</th>
-          <th className="py-2 px-4 font-semibold border-b">Attendance</th>
-          <th className="py-2 px-4 font-semibold border-b">On-Site</th>
-          <th className="py-2 px-4 font-semibold border-b">Sync Up Call</th>
           <th className="py-2 px-4 font-semibold border-b">Update</th>
         </tr>
       </thead>
       <tbody>
-        <EmployeeTableRow />
-        <EmployeeTableRow />
-        <EmployeeTableRow />
-        <EmployeeTableRow />
+        {employees &&
+          employees.map((employee) => (
+            <EmployeeTableRow key={employee.employeeId} employee={employee} />
+          ))}
       </tbody>
     </table>
   );

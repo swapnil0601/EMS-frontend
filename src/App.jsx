@@ -1,25 +1,24 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import LoginAdmin from "./pages/LoginAdmin";
-import LoginEmployee from "./pages/LoginEmployee";
-import RegisterAdmin from "./pages/RegisterAdmin";
-import RegisterEmployee from "./pages/RegisterEmployee";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import SelectLogin from "./pages/SelectLogin";
 import AdminPage from "./pages/AdminPage";
 import EmployeePage from "./pages/EmployeePage";
+import { AuthProvider } from "./context/AuthContext";
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SelectLogin />} />
-        <Route path="/login-admin" element={<LoginAdmin />} />
-        <Route path="/login-employee" element={<LoginEmployee />} />
-        <Route path="/register-admin" element={<RegisterAdmin />} />
-        <Route path="/register-employee" element={<RegisterEmployee />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/employee" element={<EmployeePage />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SelectLogin />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/employee" element={<EmployeePage />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
