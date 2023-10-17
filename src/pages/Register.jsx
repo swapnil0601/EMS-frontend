@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Image from "../assets/register1.svg";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 const RegisterAdmin = () => {
+  const navigate = useNavigate();
+  const { state, dispatch } = useAuth();
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -24,6 +28,18 @@ const RegisterAdmin = () => {
     axios
       .post("http://localhost:8080/api/v1/account/register", formData)
       .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("account", res.data.account);
+        dispatch({
+          type: "LOGIN",
+          token: res.data.token,
+          account: res.data.account,
+        });
+        if (res.data.account.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/employee/dashboard");
+        }
         console.log(res.data);
       })
       .catch((err) => {

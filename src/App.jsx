@@ -14,8 +14,8 @@ function App() {
           <Route path="/" element={<SelectLogin />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/employee" element={<EmployeePage />} />
+          <Route path="/admin/*" element={<AdminPage />} />
+          <Route path="/employee/*" element={<EmployeePage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

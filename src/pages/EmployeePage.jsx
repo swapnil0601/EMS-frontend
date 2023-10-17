@@ -8,7 +8,7 @@ const EmployeePage = () => {
     <div className="flex h-screen">
       <Sidebar />
       <Routes>
-        <Route path="employee/dashboard" element={<EmployeeDashboard />} />
+        <Route path="dashboard" element={<EmployeeDashboard />} />
       </Routes>
     </div>
   );

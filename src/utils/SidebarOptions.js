@@ -9,7 +9,7 @@ export const options = {
       path: "/admin/department",
     },
     {
-      title: "Assign Department",
+      title: "Assign",
       path: "/admin/assign",
     },
     {
@@ -17,8 +17,8 @@ export const options = {
       path: "/admin/employee",
     },
     {
-      title: "Report",
-      path: "/admin/report",
+      title: "Record",
+      path: "/admin/record",
     },
   ],
   employee: [

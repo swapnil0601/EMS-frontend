@@ -15,7 +15,6 @@ const Sidebar = () => {
     dispatch({ type: "LOGOUT" });
     navigate("/login");
   };
-  console.log(state);
   const { role } = state.account;
 
   return (

@@ -26,17 +26,17 @@ const LoginAdmin = () => {
       .post("http://localhost:8080/api/v1/account/login", formData)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+
         localStorage.setItem("account", JSON.stringify(res.data.account));
         dispatch({
           type: "LOGIN",
           token: res.data.token,
           account: res.data.account,
         });
-        console.log(state);
         if (res.data.account.role === "admin") {
-          navigate("/admin");
+          navigate("/admin/dashboard");
         } else {
-          navigate("/employee");
+          navigate("/employee/dashboard");
         }
       })
       .catch((err) => {

@@ -22,7 +22,7 @@ const events = [
 ];
 
 const EmployeeCalendar = () => {
-  const [view, setView] = useState("month"); // 'month' or 'week'
+  const [view, setView] = useState("month");
 
   return (
     <div className="container p-4">
