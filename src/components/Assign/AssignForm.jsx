@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-hot-toast";
 
-const AssignForm = () => {
+const AssignForm = ({ onAssignCreate }) => {
   const [employeeId, setEmployeeId] = useState();
   const [departmentId, setDepartmentId] = useState();
   const { state } = useAuth();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.table(employeeId, departmentId, state.token);
@@ -18,11 +20,12 @@ const AssignForm = () => {
 
     axios
       .post("http://localhost:8080/api/v1/assign/assignEmployee", formData)
-      .then((res) => {
-        alert("Employee Assigned Successfully");
-        console.log(res);
+      .then(() => {
+        toast.success("Employee Assigned Successfully");
+        onAssignCreate();
       })
       .catch((err) => {
+        toast.error("Error Assigning Employee");
         console.log(err);
       });
   };

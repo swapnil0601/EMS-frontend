@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { UploadIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 const EmployeeTableRow = ({ employee, date }) => {
   const [present, setPresent] = useState(false);
   const [onSite, setOnSite] = useState(false);
   const [doneSyncUp, setDoneSyncUp] = useState(false);
-  const [success, setSuccess] = useState(false);
   const { state } = useAuth();
   const handleTogglePresent = () => {
     setPresent(!present);
@@ -32,13 +32,12 @@ const EmployeeTableRow = ({ employee, date }) => {
     axios
       .post("http://localhost:8080/api/v1/record/addrecord", data)
       .then((res) => {
-        setSuccess(true);
+        toast.success("Record Assignment Successful");
         console.log("Success: " + res.data);
-        // alert("Record Assigned Successfully");
       })
       .catch((err) => {
         console.log(err);
-        // alert("Record Assignment Failed");
+        toast.error("Record Assignment Failed");
       });
   };
 
@@ -106,7 +105,7 @@ const EmployeeTableRow = ({ employee, date }) => {
           className={`bg-green-500 text-white font-bold py-2 px-4 rounded`}
           onClick={handleUpload}
         >
-          {success ? <CheckIcon /> : <UploadIcon />}
+          <UploadIcon />
         </button>
       </td>
     </tr>

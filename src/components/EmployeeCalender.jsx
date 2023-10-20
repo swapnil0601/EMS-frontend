@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -22,8 +22,6 @@ const events = [
 ];
 
 const EmployeeCalendar = () => {
-  const [view, setView] = useState("month");
-
   return (
     <div className="container p-4">
       <h1 className="text-3xl font-semibold mb-4">Calendar</h1>
@@ -33,7 +31,7 @@ const EmployeeCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         views={{ month: true, week: false }}
-        view={view}
+        view="month"
         style={{ height: 500, width: 1000 }}
         eventPropGetter={(event, start, end, isSelected) => {
           const newStyle = {

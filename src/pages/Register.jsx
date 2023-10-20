@@ -4,12 +4,13 @@ import { ArrowLeft } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-hot-toast";
 const RegisterAdmin = () => {
   const navigate = useNavigate();
-  const { state, dispatch } = useAuth();
+  const { dispatch } = useAuth();
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     role: "",
@@ -28,6 +29,7 @@ const RegisterAdmin = () => {
     axios
       .post("http://localhost:8080/api/v1/account/register", formData)
       .then((res) => {
+        toast.success("Register Success");
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("account", res.data.account);
         dispatch({
@@ -54,38 +56,36 @@ const RegisterAdmin = () => {
       </a>
       <div className="w-1/2 flex justify-center items-center">
         <form className="p-2 bg-white w-2/3" onSubmit={handleSubmit}>
-          <h2 className="text-2xl font-semibold mb-4">
-            Register as <span className="font-bold">Admin</span>
-          </h2>
+          <h2 className="text-2xl font-bold mb-4">Register</h2>
           <div className="mb-4">
             <label
-              htmlFor="firstname"
+              htmlFor="firstName"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
               Firstname
             </label>
             <input
-              type="firstname"
-              id="firstname"
+              type="text"
+              id="firstName"
               className="w-full border rounded py-2 px-3"
               placeholder="Enter your First Name"
-              value={formData.firstname}
+              value={formData.firstName}
               onChange={handleChange}
             />
           </div>
           <div className="mb-4">
             <label
-              htmlFor="lastname"
+              htmlFor="lastName"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
               Lastname
             </label>
             <input
               type="text"
-              id="lastname"
+              id="lastName"
               className="w-full border rounded py-2 px-3"
               placeholder="Enter your Lastname"
-              value={formData.lastname}
+              value={formData.lastName}
               onChange={handleChange}
             />
           </div>

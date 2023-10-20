@@ -8,6 +8,8 @@ import EmployeePage from "./pages/EmployeePage";
 import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 function App() {
+  // localStorage.removeItem("token");
+  // localStorage.removeItem("account");
   return (
     <AuthProvider>
       <BrowserRouter>

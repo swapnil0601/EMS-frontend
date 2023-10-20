@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
-const CreateDepartment = () => {
+const CreateDepartment = ({ onDepartmentCreate }) => {
   const [departmentName, setDepartmentName] = useState("");
   const { state } = useAuth();
   const handleSubmit = (e) => {
@@ -13,11 +14,12 @@ const CreateDepartment = () => {
         token: state.token,
       })
       .then((res) => {
-        alert("Department Created");
+        toast.success("Department Created");
+        onDepartmentCreate();
         console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
       });
   };
   return (

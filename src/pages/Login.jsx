@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
 const LoginAdmin = () => {
   const navigate = useNavigate();
-  const { state, dispatch } = useAuth();
+  const { dispatch } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -59,7 +59,7 @@ const LoginAdmin = () => {
       <div className="w-1/2 flex justify-center items-center">
         <form className="p-2 bg-white w-2/3" onSubmit={handleSubmit}>
           <h2 className="text-2xl font-semibold mb-4">
-            Login as <span className="font-bold">Admin</span>
+            <span className="font-bold">Login</span>
           </h2>
           <div className="mb-4">
             <label
