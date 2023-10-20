@@ -1,16 +1,46 @@
 import React, { useState } from "react";
-// import { IoMdBusiness, IoIosHome } from "react-icons/io";
-const EmployeeTableRow = ({ employee }) => {
-  const [attendance, setAttendance] = useState(false);
-  // const [onSite, setOnSite] = useState(false);
-  // const [doneSyncUp, setDoneSyncUp] = useState(false);
-
+import { UploadIcon, CheckIcon } from "@radix-ui/react-icons";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
+const EmployeeTableRow = ({ employee, date }) => {
+  const [present, setPresent] = useState(false);
+  const [onSite, setOnSite] = useState(false);
+  const [doneSyncUp, setDoneSyncUp] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { state } = useAuth();
   const handleTogglePresent = () => {
-    setAttendance(!attendance);
+    setPresent(!present);
   };
-  // const handleToggleOnSite = () => {
-  //   setOnSite(!onSite);
-  // };
+  const handleToggleOnSite = () => {
+    setOnSite(!onSite);
+  };
+  const handleToggleDoneSyncUp = () => {
+    setDoneSyncUp(!doneSyncUp);
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    const data = {
+      employeeId: Number(employee.employeeId),
+      present,
+      onSite,
+      doneSyncUpCall: doneSyncUp,
+      date,
+      token: state.token,
+    };
+    console.log(data);
+    axios
+      .post("http://localhost:8080/api/v1/record/addrecord", data)
+      .then((res) => {
+        setSuccess(true);
+        console.log("Success: " + res.data);
+        // alert("Record Assigned Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        // alert("Record Assignment Failed");
+      });
+  };
 
   const { employeeId, firstName, lastName, email } = employee;
   return (
@@ -21,7 +51,7 @@ const EmployeeTableRow = ({ employee }) => {
       </td>
       <td className="py-2 px-4 border-b">{email}</td>
       <td className="py-2 px-4 border-b">
-        {attendance ? (
+        {present ? (
           <button
             className={`bg-green-500 text-white font-bold py-2 px-4 rounded`}
             onClick={handleTogglePresent}
@@ -36,6 +66,48 @@ const EmployeeTableRow = ({ employee }) => {
             Absent
           </button>
         )}
+      </td>
+      <td className="py-2 px-4 border-b">
+        {onSite ? (
+          <button
+            className={`bg-green-500 text-white font-bold py-2 px-4 rounded`}
+            onClick={handleToggleOnSite}
+          >
+            Office
+          </button>
+        ) : (
+          <button
+            className={`bg-orange-500 text-white font-bold py-2 px-4 rounded`}
+            onClick={handleToggleOnSite}
+          >
+            Home
+          </button>
+        )}
+      </td>
+      <td className="py-2 px-4 border-b">
+        {doneSyncUp ? (
+          <button
+            className={`bg-green-500 text-white font-bold py-2 px-4 rounded`}
+            onClick={handleToggleDoneSyncUp}
+          >
+            Done
+          </button>
+        ) : (
+          <button
+            className={`bg-red-500 text-white font-bold py-2 px-4 rounded`}
+            onClick={handleToggleDoneSyncUp}
+          >
+            Not Done
+          </button>
+        )}
+      </td>
+      <td className="py-2 px-4 border-b">
+        <button
+          className={`bg-green-500 text-white font-bold py-2 px-4 rounded`}
+          onClick={handleUpload}
+        >
+          {success ? <CheckIcon /> : <UploadIcon />}
+        </button>
       </td>
     </tr>
   );

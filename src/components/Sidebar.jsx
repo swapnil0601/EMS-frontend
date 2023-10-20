@@ -15,14 +15,14 @@ const Sidebar = () => {
     dispatch({ type: "LOGOUT" });
     navigate("/login");
   };
-  const { role } = state.account;
+  const { role, firstName, lastName } = state.account;
 
   return (
     <div className="bg-gray-800 h-screen w-1/5 flex flex-col justify-between py-4">
       <div>
         <ul className="text-white">
           <li className="py-2 pl-4 cursor-pointer mb-6 font-semibold">
-            Swapnil Sahoo
+            {firstName} {lastName}
           </li>
           {options[role]?.map((option) => (
             <SidebarOption key={option.title} {...option} />

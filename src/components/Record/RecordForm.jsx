@@ -7,7 +7,7 @@ const RecordForm = () => {
   const [present, setPresent] = useState(true);
   const [onSite, setOnSite] = useState(true);
   const [doneSyncUpCall, setDoneSyncUpCall] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const { state } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();

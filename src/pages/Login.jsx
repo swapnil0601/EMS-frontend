@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Image from "../assets/login1.svg";
 import { ArrowLeft } from "lucide-react";
+import toast from "react-hot-toast";
 const LoginAdmin = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useAuth();
@@ -25,8 +26,8 @@ const LoginAdmin = () => {
     axios
       .post("http://localhost:8080/api/v1/account/login", formData)
       .then((res) => {
+        toast.success("Login Success");
         localStorage.setItem("token", res.data.token);
-
         localStorage.setItem("account", JSON.stringify(res.data.account));
         dispatch({
           type: "LOGIN",

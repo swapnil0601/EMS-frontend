@@ -6,10 +6,12 @@ import SelectLogin from "./pages/SelectLogin";
 import AdminPage from "./pages/AdminPage";
 import EmployeePage from "./pages/EmployeePage";
 import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Toaster position="top-right" reverseOrder={false} />
         <Routes>
           <Route path="/" element={<SelectLogin />} />
           <Route path="/login" element={<Login />} />

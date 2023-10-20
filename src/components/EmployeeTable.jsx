@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmployeeTableRow from "./EmployeeTableRow";
 import axios from "axios";
-const EmployeeTable = () => {
+const EmployeeTable = ({ date }) => {
   const [employees, setEmployees] = useState([]);
 
   const getEmployees = async () => {
@@ -23,13 +23,20 @@ const EmployeeTable = () => {
           <th className="py-2 px-4 font-semibold border-b">ID</th>
           <th className="py-2 px-4 font-semibold border-b">Name</th>
           <th className="py-2 px-4 font-semibold border-b">Email</th>
+          <th className="py-2 px-4 font-semibold border-b">Present</th>
+          <th className="py-2 px-4 font-semibold border-b">Location</th>
+          <th className="py-2 px-4 font-semibold border-b">Sync Up Call</th>
           <th className="py-2 px-4 font-semibold border-b">Update</th>
         </tr>
       </thead>
       <tbody>
         {employees &&
           employees.map((employee) => (
-            <EmployeeTableRow key={employee.employeeId} employee={employee} />
+            <EmployeeTableRow
+              key={employee.employeeId}
+              employee={employee}
+              date={date}
+            />
           ))}
       </tbody>
     </table>
