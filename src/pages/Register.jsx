@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "../assets/register1.svg";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-hot-toast";
-const RegisterAdmin = () => {
+const Register = () => {
   const navigate = useNavigate();
+  const [departments, setDepartments] = useState([]);
   const { dispatch } = useAuth();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -14,14 +15,27 @@ const RegisterAdmin = () => {
     email: "",
     password: "",
     role: "",
+    departmentid: 1,
   });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [id]: value,
-    }));
+    if (id === "departmentid") {
+      const selectedDepartmentId = parseInt(value, 10);
+      const selectedDepartment = departments.find(
+        (department) => department.departmentId === selectedDepartmentId
+      );
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [id]: selectedDepartment?.departmentId,
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [id]: value,
+      }));
+    }
+    console.log(formData);
   };
 
   const handleSubmit = (e) => {
@@ -48,6 +62,21 @@ const RegisterAdmin = () => {
         console.log(err);
       });
   };
+
+  const fetchDepartments = () => {
+    axios
+      .get("http://localhost:8080/api/v1/department/all")
+      .then((res) => {
+        setDepartments(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchDepartments();
+  }, []);
 
   return (
     <div className="flex h-screen">
@@ -139,6 +168,30 @@ const RegisterAdmin = () => {
               <option value="employee">Employee</option>
             </select>
           </div>
+          <div className="mb-4">
+            <label
+              htmlFor="departmentid"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Department
+            </label>
+            <select
+              id="departmentid"
+              className="w-full border rounded py-2 px-3"
+              value={formData.departmentid}
+              onChange={handleChange}
+            >
+              <option value="">Select Department</option>
+              {departments.map((department) => (
+                <option
+                  value={department.departmentId}
+                  key={department.departmentId}
+                >
+                  {department.departmentName}
+                </option>
+              ))}
+            </select>
+          </div>
           <button
             type="submit"
             className="w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
@@ -160,4 +213,4 @@ const RegisterAdmin = () => {
     </div>
   );
 };
-export default RegisterAdmin;
+export default Register;
