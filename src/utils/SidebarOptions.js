@@ -13,12 +13,12 @@ export const options = {
       path: "/admin/assign",
     },
     {
-      title: "Employee",
-      path: "/admin/employee",
-    },
-    {
       title: "Record",
       path: "/admin/record",
+    },
+    {
+      title: "Report",
+      path: "/admin/report",
     },
   ],
   employee: [

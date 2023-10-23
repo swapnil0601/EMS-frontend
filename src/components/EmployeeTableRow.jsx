@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UploadIcon, CheckIcon } from "@radix-ui/react-icons";
+import { UploadIcon } from "@radix-ui/react-icons";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";

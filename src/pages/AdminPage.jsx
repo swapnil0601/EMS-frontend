@@ -3,9 +3,9 @@ import AdminDashboard from "../components/AdminDashboard";
 import Sidebar from "../components/Sidebar";
 import { Route, Routes } from "react-router-dom";
 import Department from "../components/Department/Department";
-import Employee from "../components/Employee/Employee";
 import Assign from "../components/Assign/Assign";
 import Record from "../components/Record/Record";
+import Report from "../components/Report/Report";
 const AdminPage = () => {
   return (
     <div className="flex h-screen">
@@ -14,9 +14,9 @@ const AdminPage = () => {
         <Routes>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="department" element={<Department />} />
-          <Route path="employee" element={<Employee />} />
           <Route path="assign" element={<Assign />} />
           <Route path="record" element={<Record />} />
+          <Route path="report" element={<Report />} />
         </Routes>
       </div>
     </div>
