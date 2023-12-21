@@ -6,6 +6,7 @@ import Department from "../components/Department/Department";
 import Assign from "../components/Assign/Assign";
 import Record from "../components/Record/Record";
 import Report from "../components/Report/Report";
+import AdminRequest from "../components/AdminRequest/AdminRequest";
 const AdminPage = () => {
   return (
     <div className="flex h-screen">
@@ -17,6 +18,7 @@ const AdminPage = () => {
           <Route path="assign" element={<Assign />} />
           <Route path="record" element={<Record />} />
           <Route path="report" element={<Report />} />
+          <Route path="adminRequest" element={<AdminRequest />} />
         </Routes>
       </div>
     </div>

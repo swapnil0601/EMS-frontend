@@ -34,6 +34,7 @@ const LoginAdmin = () => {
           token: res.data.token,
           account: res.data.account,
         });
+        console.log(res.data)
         if (res.data.account.role === "admin") {
           navigate("/admin/dashboard");
         } else {

@@ -20,15 +20,15 @@ export const options = {
       title: "Report",
       path: "/admin/report",
     },
+    {
+      title: "Admin Request",
+      path: "/admin/adminRequest",
+    },
   ],
   employee: [
     {
       title: "Dashboard",
       path: "/employee/dashboard",
-    },
-    {
-      title: "Report",
-      path: "/employee/report",
     },
     {
       title: "Profile",
